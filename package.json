@@ -1,0 +1,23 @@
+{
+  "name": "swigit",
+  "version": "1.0.0",
+  "description": "A blogging platform for software developers",
+  "main": "/public/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "(https://github.com/square-table-solutions/SWIGit.git)"
+  },
+  "author": "Square Table Solutions",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "express": "^4.13.4",
+    "path": "^0.12.7"
+  },
+  "engines": {
+    "node": "5.6.0"
+  }
+}
