@@ -33,7 +33,8 @@
     "express-session": "^1.13.0",
     "knex": "^0.11.3",
     "passport": "^0.3.2",
-    "pg": "^4.5.5"
+    "pg": "^4.5.5",
+    "sqlite3": "^3.1.4"
   },
   "engines": {
     "node": "6.1.0"
