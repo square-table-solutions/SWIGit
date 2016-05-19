@@ -2,7 +2,7 @@
   "name": "swigit",
   "version": "1.0.0",
   "description": "A blogging platform for software developers",
-  "main": "/public/index.html",
+  "main": "app/index.js",
   "scripts": {
     "test": "grunt test",
     "build": "grunt build",
