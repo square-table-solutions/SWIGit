@@ -57,6 +57,19 @@ angular.module('swigit', [
     '$stateParams',
     '$urlRouter',
     function($rootScope,$state,$stateParams,$urlRouter) {
+      $rootScope.$state = $state;
+      $rootScope.$stateParams = $stateParams;
+      // custom listeners now have access to $state & $stateParams
+      $rootScope.$on('$locationChageStart', function(evt,next,curr) {
+        // middleware to run BEFORE loading new state
+        $('.main-view').hide();
+      });
+      $rootScope.$on('$locationChageSuccess', function(evt,next,curr) {
+        // middleware to run AFTER loading new state
+        $('.main-view').fadeIn(600);
+      });
+      // initialize $urlRouter listener AFTER custom listeners
+      $urlRouter.listen();
     }]);
 
 
