@@ -1,3 +1,7 @@
+
+"use strict";
+
+const app = require('../server_config.js');
 const fs = require('fs');
 const path = require('path');
 
@@ -21,3 +25,4 @@ exports.serve = {
 };
 
 module.exports;
+
