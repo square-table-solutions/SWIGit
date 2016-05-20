@@ -38,5 +38,30 @@ db.schema.hasTable('posts').then(function(exists){
   }
 }); 
 
+db.schema.hasTable('tags').then(function(exists){
+  if (!exists) {
+    db.schema.createTable('tags', function(tag){
+      tag.increments('id').primary(); 
+      tag.string('name', 50).unique(); 
+    }).then(function(table){
+      console.log("Created tags table"); 
+    })
+  }
+});
+
+db.schema.hasTable('posts_tags').then(function(exists){
+  if (!exists){
+    db.schema.createTable('posts_tags', function(post_tag){
+      post_tag.increments('id').primary(); 
+      post_tag.integer('post_id_fk'); 
+      post_tag.integer('tag_id_fk'); 
+      post_tag.foreign('post_id_fk').references('posts.id'); 
+      post_tag.foreign('tag_id_fk').references('tags.id'); 
+    }).then(function(table){
+      console.log("Created posts/tags join table"); 
+    }) 
+  }
+});
+
 const Bookshelf = require('bookshelf')(db); 
 module.exports = Bookshelf; 
