@@ -3,18 +3,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const fs = require('fs'); 
+const fs = require('fs');
+
+const route = require('./route/route_config');
 
 const app = express();
 
-const client_static_path = path.join(__dirname, '../public');
-app.use(express.static(client_static_path));   //serving static resources from here
+app.use(express.static(route.path.root));   // static resoureces
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 
-app.get('/*', function(req, res) {      
-  res.status(200).sendFile('index.html', {root: client_static_path});      //redirects calls to the main directory("/") to here
-});
+app.get('/*', route.serve.index); // serve index.html for all requests
 
 module.exports = app;
