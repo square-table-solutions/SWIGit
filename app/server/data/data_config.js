@@ -4,7 +4,7 @@ const db = require('knex')({
   client: 'sqlite3', 
   connection: {
     database: "swigitdb", 
-    filename: path.join(__dirname, 'db/swigit.sqlite') 
+    filename: path.join(__dirname, './db/swigit.sqlite') 
   }
 }); 
 

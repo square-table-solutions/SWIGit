@@ -1,0 +1,23 @@
+{
+  "name": "swigit",
+  "description": "A blogging platform for software developers",
+  "main": "app/index.js",
+  "authors": [
+    "Square Table Solutions"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/square-table-solutions/SWIGit",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/libs",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-ui-router": "^0.3.0",
+    "angular-materialize": "^0.1.8"
+  }
+}
