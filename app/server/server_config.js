@@ -12,8 +12,4 @@ app.use(express.static(client_static_path));   //serving static resources from h
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 
-app.get('/*', function(req, res) {        
-  res.status(200).send(path.join(__dirname + '../public/index.html'));      //redirects calls to the main directory("/") to here
-});
-
 module.exports = app;
