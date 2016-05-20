@@ -1,17 +1,17 @@
 "use strict"
 
-const db = require(../config.js);
+const db = require('../data_config.js');
 
 const Post = db.Model.extend({
 	tablename: 'posts',
 
-	hasTimeStamps: true,
+	hasTimeStamps: true
 
-	url_slug: this.title.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'_').replace(/<[^>]+>/gm, '') : ''
+	//url_slug: this.title.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'_').replace(/<[^>]+>/gm, '') : '',
 
 
 });
 
-model.exports = Post;
+module.exports = Post;
 
 

@@ -1,6 +1,10 @@
-var app = require('./server/server_config');
+const app = require('./server/server_config');
 
-var port = process.env.PORT || 3333;
+const port = process.env.PORT || 3333;
+
+const User = require('./server/data/models/User.js');
+
+const Post = require('./server/data/models/Post.js');
 
 app.listen(port);
 

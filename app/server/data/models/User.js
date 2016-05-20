@@ -1,5 +1,5 @@
 "use strict"
-var db = require(../data_config.js);//need dependencies for database, bcrypt or other password generating/decoding middleware
+var db = require('../data_config.js');//need dependencies for database, bcrypt or other password generating/decoding middleware
 
 const User = db.Model.extend({
 	tablename: 'users',
@@ -10,4 +10,4 @@ const User = db.Model.extend({
 
 
 
-model.exports = User;
+module.exports = User;
