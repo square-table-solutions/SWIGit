@@ -4,13 +4,13 @@ const db = require('knex')({
   client: 'sqlite3', 
   connection: {
     database: "swigitdb", 
-    filname: path.join(__dirname, 'swigit.sqlite'); 
+    filename: path.join(__dirname, 'db/swigit.sqlite') 
   }
 }); 
 
 db.schema.hasTable('users').then(function(exists){
   if (!exists){
-    db.schema.createTable('users'), function(user){
+    db.schema.createTable('users', function(user){
       user.increments('id').primary(); 
       user.string('username', 32).unique(); 
       user.string('password'); 
@@ -24,13 +24,14 @@ db.schema.hasTable('users').then(function(exists){
 
 db.schema.hasTable('posts').then(function(exists){
   if (!exists){
-    db.scchema.createTable('posts'), function(post){
+    db.schema.createTable('posts', function(post){
       post.increments('id').primary(); 
       post.string('title', 75); 
       post.string('filepath', 128); 
       post.string('url_slug', 75); 
       post.integer('user_id_fk'); 
-      post.foreign('posts.user_id_fk').references('users.id');
+      post.timestamp('created_at'); 
+      post.foreign('user_id_fk').references('users.id'); 
     }).then(function(table){
       console.log("Created posts table"); 
     })
