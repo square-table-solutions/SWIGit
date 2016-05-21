@@ -1,8 +1,13 @@
+"use strict";
+
 const fs = require('fs');
 const path = require('path');
+const bodyParser = require('body-parser');
 
 const User = require('../data/models/User.js');
 const Post = require('../data/models/Post.js');
+const Utils = require('../data/api_handler/utils.js');
+
 
 exports.path = {
   root: path.join(__dirname, '../../public'),
@@ -20,4 +25,17 @@ exports.serve = {
   }
 };
 
-module.exports;
+exports.utils = {
+	login: function(req,res) {
+
+	},
+
+	signup: function(req,res) {
+		Utils.createUserFolder(req, res);		
+	},
+
+	publish: function(req,res) {
+		Utils.publish(req, res);
+	}
+}
+
