@@ -1,7 +1,7 @@
-<div class="container" ng-controller="user_feed_ctrl">
+<div class="container" ng-controller="post_feed_ctrl">
 <div ng-repeat="post in posts">
 
-<div ui-sref="user_post({url_slug: post.url_slug})" class="hoverable container post-index-card">
+<div ui-sref="post_body({feed: post.feed || post.username, url_slug: post.url_slug})" class="hoverable container post-index-card">
   
     <div class="col s12 m10 offset-m1">
       <h4 class="brown-text text-darken-3 card-title">{{post.title}}</h4>

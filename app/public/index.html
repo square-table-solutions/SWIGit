@@ -35,21 +35,21 @@
 
   <body ng-app="swigit">
     
-    <nav> 
+    <nav controller="nav_ctrl"> 
       <div class="nav-wrapper brown lighten-4">
         
           <ul class="left">
             <li>
               <a class="btn-floating btn-large waves-effect 
               waves-light brown lighten-2"
-              ui-sref="user_post({username:'lukas',url_slug:'potatoes'})">
+              ui-sref="post_feed({feed:'lukas'})">
                 <i class="material-icons brown-text text-darken-3">library_books</i>
               </a>
             </li>
             <li>
               <a class="btn-floating btn-large waves-effect 
               waves-light brown lighten-2"
-              ui-sref="user_feed({username:'lukas'})">
+              ui-sref="main">
                 <i class="material-icons brown-text text-darken-3">perm_media</i>
               </a>
             </li>
@@ -78,7 +78,7 @@
     <!-- minified client logic -->
     <script type="text/javascript" src="/js/helpers/auth_mdl.js"></script>
     <script type="text/javascript" src="/js/helpers/data_mdl.js"></script>
-    <script type="text/javascript" src="/js/modules/user_mdl.js"></script>
+    <script type="text/javascript" src="/js/modules/post_mdl.js"></script>
     <script type="text/javascript" src="/js/modules/admn_mdl.js"></script>
     <script type="text/javascript" src="/js/modules/main_mdl.js"></script>
     <script type="text/javascript" src="/js/app.js"></script>

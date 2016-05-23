@@ -4,10 +4,10 @@
 angular.module('swigit', [
   'ui.materialize',
   'ui.router',
-  'swigit.data_mdl',
   'swigit.auth_mdl',
+  'swigit.data_mdl',
   'swigit.admn_mdl',
-  'swigit.user_mdl',
+  'swigit.post_mdl',
   'swigit.main_mdl'
   ])
 
@@ -16,7 +16,7 @@ angular.module('swigit', [
     '$urlRouterProvider',
     '$locationProvider',
     function($stateProvider,$urlRouterProvider,$locationProvider) {
-      // if rout not found routes to root
+      // if rout not found, redirect to root (consider a 404 page?)
       $urlRouterProvider.otherwise('/');
       $stateProvider // application route handler
         .state('main', {
@@ -24,28 +24,43 @@ angular.module('swigit', [
             templateUrl: '/templates/main_tmpl.html',
             controller: 'main_ctrl'
           })
-        .state('user_feed', {
-            url: '/:username',
+        .state('post_edit', {
+            url: '/edit',
+            templateUrl: '/templates/post_edit_tmpl.html',
+            resolve: {
+              auth_user: ['$stateParams','auth_fac',function($stateParams,auth_fac) {
+                // authenticate user credentials here
+                // fetch all post data
+                return true; // temp
+              }]
+            },
+            controller: 'post_edit_ctrl'
+          })
+        .state('post_feed', {
+            url: '/:feed',
             templateUrl: '/templates/post_feed_tmpl.html',
             resolve: {
               feed_data: ['$stateParams','data_fac',function($stateParams,data_fac) {
                 // resolve fetch before render to avoid dom flicker
-                return data_fac.get_feed($stateParams);
+                // return data_fac.get_feed($stateParams);
+                return true; // temp
               }]
             },
-            controller: 'user_feed_ctrl'
-          })
-        .state('user_post', {
-            url: '/:username/:url_slug',
+            controller: 'post_feed_ctrl'
+          }) // consider using sub-view for posts
+        .state('post_body', {
+            url: '/:feed/:url_slug', 
             templateUrl: '/templates/post_body_tmpl.html',
             resolve: {
               post_data: ['$stateParams','data_fac',function($stateParams,data_fac) {
                 // resolve fetch before render to avoid dom flicker
-                return data_fac.get_post($stateParams);
+                // return data_fac.get_post($stateParams);
+                return true; // temp
               }]
             },
-            controller: 'user_post_ctrl'
+            controller: 'post_body_ctrl'
           });
+        
         $locationProvider.html5Mode(true);
         // defer listeners, more info in .run
         $urlRouterProvider.deferIntercept();
