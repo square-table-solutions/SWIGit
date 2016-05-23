@@ -1,0 +1,24 @@
+<div class="container" ng-controller="post_form_ctrl">
+
+  <div class="col s12 m10 offset-m1">
+    <input-field>
+      <input type="text" ng-model="post.title" length="75" autofocus/>
+      <label>Title...</label>
+    </input-field>
+  </div>
+
+  <div class="col s12 m10 offset-m1">
+    <input-field>
+      <input type="text" ng-model="post.tags" length="75"/>
+      <label>Tags...</label>
+    </input-field>
+  </div>
+
+  <div class="col s12 m10 offset-m1">
+    <input-field>
+      <textarea ng-model="post.content" class="materialize-textarea">{{content}}</textarea>
+      <label>Content...</label>
+    </input-field>
+  </div>
+
+</div>
