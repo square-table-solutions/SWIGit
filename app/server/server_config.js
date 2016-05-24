@@ -17,8 +17,10 @@ app.use(bodyParser.urlencoded({extended:false}));
 
 app.get('/*', route.serve.index); 
 
-app.post('/_/api', route.utils.publish);
+app.post('/_/api/post', route.utils.publish);
 
-app.post('/signup', route.utils.signup)
+app.post('/signup', route.utils.signup);
+
+app.post('/_/api/posts', route.utils.fetch_posts)
 
 module.exports = app;

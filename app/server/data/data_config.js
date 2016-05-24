@@ -5,7 +5,8 @@ const db = require('knex')({
   connection: {
     database: "swigitdb", 
     filename: path.join(__dirname, './db/swigit.sqlite') 
-  }
+  },
+  useNullAsDefault:true
 }); 
 
 db.schema.hasTable('users').then(function(exists){

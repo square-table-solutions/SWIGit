@@ -3,12 +3,14 @@
 const db = require('../data_config.js');
 
 const Post = db.Model.extend({
-	tablename: 'posts',
+	tableName: 'posts',
 
 	hasTimeStamps: true
 
-	//url_slug: this.title.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'_').replace(/<[^>]+>/gm, '') : '',
 
+
+
+	//url_slug: this.title.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'_').replace(/<[^>]+>/gm, '') : '',
 
 });
 
