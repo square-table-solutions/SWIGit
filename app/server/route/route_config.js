@@ -40,6 +40,14 @@ exports.utils = {
 
   fetch_posts: function(req,res) {
     Utils.fetch_posts(req,res);
+  },
+
+  edit_post: function(req, res) {
+    Utils.edit_post(req, res)
+  },
+
+  delete_post: function(req, res) {
+    Utils.delete_post(req, res);
   }
 }
 

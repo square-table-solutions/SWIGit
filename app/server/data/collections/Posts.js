@@ -1,9 +1,9 @@
 
 var db = require('../data_config');
-var User = require('../models/Post.js');
+var Post = require('../models/Post.js');
 
-var Users = new db.Collection();
+var Posts = new db.Collection();
 
-Users.model = User;
+Posts.model = User;
 
-module.exports = Users;
+module.exports = Posts;

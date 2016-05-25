@@ -21,6 +21,8 @@ app.post('/_/api/post', route.utils.publish);
 
 app.post('/signup', route.utils.signup);
 
-app.post('/_/api/posts', route.utils.fetch_posts)
+app.post('/_/api/posts', route.utils.fetch_posts);
+
+app.post('/_/api/delete_post', route.utils.delete_post);
 
 module.exports = app;
