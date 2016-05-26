@@ -34,15 +34,6 @@ gulp.task('concat_transpile', function(){
   .pipe(gulp.dest('app/public/build/js')); 
 }); 
 
-
-gulp.task('transpile', function(){
-  return gulp.src('app/public/build/js/*.js')
-    .pipe(babel({
-      presets: ['es2015']
-    }))
-    .pipe(gulp.dest('app/public/build/js/dist'))
-});
-
 gulp.task('minify-css', function(){
   return gulp.src('app/public/css/layout.css')
     .pipe(cleanCSS({debug:true}, function(stylesheet){
