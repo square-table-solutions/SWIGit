@@ -5,6 +5,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const Post = require('../models/Post.js');
 const User = require('../models/User.js');
+const SubUtils = require('./subutils/subutils.js');
 
 
 module.exports = {
@@ -43,43 +44,34 @@ module.exports = {
 		})
 		.fetch()
 		.then(function(user){
-			if(user) {
-				new Post({
+			new Post({
+				user_id:user.id,
+				filepath:path.join(userPath, url_slug)
+			})
+			.fetch()
+			.then(function(item){
+				if(!item) {
+					new Post({
+					created_at:new Date(),
 					user_id:user.id,
-					filepath:path.join(userPath, url_slug)
-				})
-				.fetch()
-				.then(function(item){
-					if(!item) {
-						new Post({
-						created_at:new Date(),
-						user_id:user.id,
-						title:title,
-						filepath:path.join(userPath, url_slug),
-						url_slug:url_slug
-						})
-						.save()
-						.then(function(){
-							fs.writeFile(path.join(userPath, url_slug), content, 'utf-8', function(err){
-								if (err) {
-									console.log(err)
-								}
-								else {
-									res.sendStatus(200);
-								}
-							});
-						});
-					}
-					else { 
-						//update posts here
-						//will need a fs update statement as well
-						res.sendStatus(200);
-					}
-				})
-				.catch(function(err) {
-					console.log("Error received: ",err);
-				});
-			}
+					title:title,
+					filepath:path.join(userPath, url_slug),
+					url_slug:url_slug
+					})
+					.save()
+					.then(function() {
+						SubUtils.createTextDocument(userPath, url_slug, content, res);
+					});
+				}
+				else { 
+					fs.unlink(path.join(userPath, url_slug), function() {
+						SubUtils.createTextDocument(userPath, url_slug, content, res);
+					});
+				}
+			})
+			.catch(function(err) {
+				console.log("Error received: ",err);
+			});
 		})
 		.catch(function(err) {
 			console.log("Error received: ", err);
@@ -101,28 +93,9 @@ module.exports = {
 			}
 		});
 
-		let results = [];
 		fs.readdir(userPath, function(err, files) { 
-			retrievePostsText(files)
+			SubUtils.retrievePostsText(files, res, username, userPath)
 		});
-
-		function retrievePostsText(filenames) {
-			return Promise.all(filenames.map(function(file) {
-				fs.readFile(path.join(userPath, file), 'utf-8', function(err, data) {
-					if (err) {
-						console.error(err);
-					}
-					results.push({title:file,content:data});
-					if (results.length === filenames.length) {
-						res.status(200).send({username:username, posts:results});
-					}
-				});
-			}))
-		};
-	},
-
-	edit_post: function(req, res) {
-
 
 	},
 
