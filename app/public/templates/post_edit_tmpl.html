@@ -1,24 +1,57 @@
-<div class="container" ng-controller="post_form_ctrl">
+<div class="container" ng-controller="post_edit_ctrl">
+
+<form name="post_edit" novalidate>
 
   <div class="col s12 m10 offset-m1">
     <input-field>
-      <input type="text" ng-model="post.title" length="75" autofocus/>
-      <label>Title...</label>
+      <input type="text" ng-model="post.tags" length="75" value="{{post.url_slug}}" class="brown-text text-darken-2" required autofocus/>
+      <label class="brown-text">Title...</label>
     </input-field>
   </div>
 
   <div class="col s12 m10 offset-m1">
     <input-field>
-      <input type="text" ng-model="post.tags" length="75"/>
-      <label>Tags...</label>
+      <input type="text" ng-model="post.tags" length="75" value="{{post.url_slug}}" class="brown-text text-darken-2"/>
+      <label class="brown-text">URL-Slug...</label>
     </input-field>
   </div>
 
   <div class="col s12 m10 offset-m1">
     <input-field>
-      <textarea ng-model="post.content" class="materialize-textarea">{{content}}</textarea>
-      <label>Content...</label>
+      <input type="text" ng-model="post.tags" value="{{post.tags}}" class="brown-text text-darken-2" required/>
+      <label class="brown-text">Tags...</label>
     </input-field>
   </div>
+
+  <div class="col s12 m10 offset-m1">
+    <input-field>
+      <textarea ng-model="post.content" class="materialize-textarea brown-text text-darken-2" required>
+        {{post.content}}
+      </textarea>
+      <label class="brown-text">Content...</label>
+    </input-field>
+  </div>
+  
+  <div class="fixed-action-btn vertical" style="bottom: 12px; right: 12px;">
+    <a class="btn-floating btn-large brown lighten-3">
+      <i class="large material-icons brown-text text-lighten-1">mode_edit</i>
+    </a>
+    <ul>
+      <li><a tooltipped class="btn-floating amber lighten-5"
+        data-position="left" data-delay="90" data-tooltip="PLAN">
+        <i class="material-icons amber-text text-accent-3">schedule</i>
+      </a></li>
+      <li><a tooltipped class="btn-floating amber lighten-5"
+        data-position="left" data-delay="90" data-tooltip="POST">
+        <i class="material-icons amber-text text-accent-3">input</i>
+      </a></li>
+      <li><a tooltipped class="btn-floating amber lighten-5"
+        data-position="left" data-delay="90" data-tooltip="SAVE">
+        <i class="material-icons amber-text text-accent-3">system_update_alt</i>
+      </a></li>
+    </ul>
+  </div>
+
+</form>
 
 </div>
