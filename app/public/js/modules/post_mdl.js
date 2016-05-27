@@ -12,6 +12,24 @@ angular.module('swigit.post_mdl', [])
         url_slug: 'random_postname',
         published: 'May 19, 2016',
         content: 'This is an exerpt'
+      },
+      {
+        title: 'Fake feed array...',
+        fullname: 'L. M. Welinder',
+        username: 'lukas',
+        feed: null,
+        url_slug: 'random_postname',
+        published: 'May 19, 2016',
+        content: 'This is an exerpt'
+      },
+      {
+        title: 'Fake feed array...',
+        fullname: 'L. M. Welinder',
+        username: 'lukas',
+        feed: null,
+        url_slug: 'random_postname',
+        published: 'May 19, 2016',
+        content: 'This is an exerpt'
       }
     ];
 
@@ -29,6 +47,6 @@ angular.module('swigit.post_mdl', [])
       };
   }])
 
-  .controller('post_form_ctrl',['$scope',function($scope) {
+  .controller('post_edit_ctrl',['$scope',function($scope) {
     //$scope.post;
   }]);
