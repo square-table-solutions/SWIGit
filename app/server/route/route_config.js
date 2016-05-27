@@ -1,5 +1,6 @@
 "use strict";
 
+const app = require('../server_config.js');
 const fs = require('fs');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -46,4 +47,7 @@ exports.utils = {
     Utils.delete_post(req, res);
   }
 }
+=======
+module.exports;
+>>>>>>> b733c7bb7023db536af8d27a14b3b5efd43961ac
 

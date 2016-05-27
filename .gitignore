@@ -3,4 +3,8 @@ app/server/data/db/swigit.sqlite
 app/public/libs
 app/public/build
 app/server/data/db/
-
+.DS_Store
+app/.DS_Store
+app/public/.DS_Store
+app/server/.DS_Store
+app/server/data/.DS_Store

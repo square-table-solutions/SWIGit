@@ -25,4 +25,10 @@ app.post('/_/api/posts', route.utils.fetch_posts);
 
 app.post('/_/api/delete_post', route.utils.delete_post);
 
+//Sam comment - I think the above code does the same thing as this: 
+
+// app.get('/*', function(req, res) {        
+//   res.status(200).send(path.join(__dirname, '../../public/index.html'));      //redirects calls to the main directory("/") to here
+// });
+
 module.exports = app;
