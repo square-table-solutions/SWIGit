@@ -5,7 +5,8 @@ const db = require('knex')({
   connection: {
     database: "swigitdb", 
     filename: path.join(__dirname, './db/swigit.sqlite') 
-  }
+  },
+  useNullAsDefault:true
 }); 
 
 db.schema.hasTable('users').then(function(exists){
@@ -29,9 +30,9 @@ db.schema.hasTable('posts').then(function(exists){
       post.string('title', 75); 
       post.string('filepath', 128); 
       post.string('url_slug', 75); 
-      post.integer('user_id_fk'); 
+      post.integer('user_id'); 
       post.timestamp('created_at'); 
-      post.foreign('user_id_fk').references('users.id'); 
+      post.foreign('user_id').references('users.id'); 
     }).then(function(table){
       console.log("Created posts table"); 
     })

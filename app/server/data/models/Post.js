@@ -3,11 +3,13 @@
 const db = require('../data_config.js');
 
 const Post = db.Model.extend({
-	tablename: 'posts',
+	tableName: 'posts',
 
-	hasTimeStamps: true
+	hasTimeStamps: true,
 
-	//url_slug: this.title.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'_').replace(/<[^>]+>/gm, '') : '',
+	user: function() {
+		return this.hasOne(User);
+	}
 
 
 });

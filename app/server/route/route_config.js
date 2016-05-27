@@ -31,11 +31,19 @@ exports.utils = {
 	},
 
 	signup: function(req,res) {
-		Utils.createUserFolder(req, res);		
+    Utils.createUserProfile(req, res);
 	},
 
 	publish: function(req,res) {
 		Utils.publish(req, res);
-	}
+	},
+
+  fetch_posts: function(req,res) {
+    Utils.fetch_posts(req,res);
+  },
+
+  delete_post: function(req, res) {
+    Utils.delete_post(req, res);
+  }
 }
 
