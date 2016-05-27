@@ -4,6 +4,10 @@ angular.module('swigit.data_mdl', [])
 
   .factory('data_fac',['$http','auth_fac',function($http,auth_fac) {
 
+    // http requests with params object, returns promise
+    const GET = (params) => $http({method:'GET', url:'/_api/posts', data:params});
+    const POST = (params) => $http({method:'POST', url:'/_api/posts', data:params});
+
 // 'db' structure example:
 // --->
     // const db = {
@@ -16,11 +20,7 @@ angular.module('swigit.data_mdl', [])
     //     data: { feed: postArray, hash: postIndexByUrlSlug }
     //   }
     // };
-    const db = {}; 
-
-    // http requests with params object, returns promise
-    const GET = (params) => $http({method:'GET', url:'/_api/posts', data:params});
-    const POST = (params) => $http({method:'POST', url:'/_api/posts', data:params});
+    const db = {};
 
     /**
      * [ 'Feed' constructor, accepts data from server and indexes
@@ -52,8 +52,8 @@ angular.module('swigit.data_mdl', [])
       if(db[params.feed])
         return db[params.feed];
       return GET(params) 
-        .then((resp) => (db[params.feed] = new Feed(resp.fullname,resp.feed)));
-        //TODO implement error handler
+        .then((resp) => (db[params.feed] = new Feed(resp.fullname,resp.feed)))
+        .catch((err) => ( console.error(err) )); //TODO: consider redirecting to error page
     };
 
     /**
@@ -71,8 +71,8 @@ angular.module('swigit.data_mdl', [])
       if(db[params.feed].hash[params.url_slug])
         return db[params.feed].hash[params.url_slug];
       return GET(params)
-        .then((resp) => (db[params.feed] = new Feed(resp.data)));
-        //TODO implement error handler
+        .then((resp) => (db[params.feed] = new Feed(resp.data)))
+        .catch((err) => ( console.error(err) )); //TODO: consider redirecting to error page
     };
 
     return {
