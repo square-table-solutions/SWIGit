@@ -16,27 +16,27 @@ angular.module('swigit', [
     '$urlRouterProvider',
     '$locationProvider',
     function($stateProvider,$urlRouterProvider,$locationProvider) {
-      // if rout not found, redirect to root (consider a 404 page?)
-      $urlRouterProvider.otherwise('/');
-      $stateProvider // application route handler
-        .state('main', {
+
+          const main_state = {
             url: '/',
             templateUrl: '/templates/main_tmpl.html',
             controller: 'main_ctrl'
-          })
-        .state('post_edit', {
+          };
+
+          const post_edit_state = {
             url: '/edit',
             templateUrl: '/templates/post_edit_tmpl.html',
             resolve: {
               auth_user: ['$stateParams','auth_fac',function($stateParams,auth_fac) {
                 // authenticate user credentials here
-                // fetch all post data
+                // if editing current then fetch all post data
                 return true; // temp
               }]
             },
             controller: 'post_edit_ctrl'
-          })
-        .state('post_feed', {
+          };
+
+          const post_feed_state = {
             url: '/:feed',
             templateUrl: '/templates/post_feed_tmpl.html',
             resolve: {
@@ -47,8 +47,9 @@ angular.module('swigit', [
               }]
             },
             controller: 'post_feed_ctrl'
-          }) // consider using sub-view for posts
-        .state('post_body', {
+          };
+          
+          const post_body_state = {
             url: '/:feed/:url_slug', 
             templateUrl: '/templates/post_body_tmpl.html',
             resolve: {
@@ -59,7 +60,15 @@ angular.module('swigit', [
               }]
             },
             controller: 'post_body_ctrl'
-          });
+          }
+
+      // if rout not found, redirect to root (consider a 404 page?)
+      $urlRouterProvider.otherwise('/');
+      $stateProvider // application route handler
+        .state('main', main_state)
+        .state('post_edit', post_edit_state)
+        .state('post_feed', post_feed_state) // consider using sub-view for posts
+        .state('post_body', post_body_state);
         
         $locationProvider.html5Mode(true);
         // defer listeners, more info in .run
@@ -75,14 +84,27 @@ angular.module('swigit', [
       $rootScope.$state = $state;
       $rootScope.$stateParams = $stateParams;
       // custom listeners now have access to $state & $stateParams
+      
       $rootScope.$on('$locationChageStart', function(evt,next,curr) {
+        // state change link pressed
         // middleware to run BEFORE loading new state
-        $('.main-view').hide();
       });
       $rootScope.$on('$locationChageSuccess', function(evt,next,curr) {
+        // router has resolved path
         // middleware to run AFTER loading new state
-        $('.main-view').fadeIn(600);
       });
+      $rootScope.$on('$stateChangeError', function(evt,next,curr) {
+        // router has resolved path
+        // middleware to run AFTER loading new state
+      });
+
+      $rootScope.$on('$viewContentLoading', function(evt, cfi){ 
+        // view is loading
+      });
+      $rootScope.$on('$viewContentLoaded', function(evt, cfi){ 
+        // view has loaded
+      });
+      
       // initialize $urlRouter listener AFTER custom listeners
       $urlRouter.listen();
     }]);

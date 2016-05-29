@@ -1,29 +1,46 @@
-<div class="container" ng-controller="main_ctrl">
+<div class="container"  ng-controller="main_ctrl">
 
+<div class="valign-wrapper" style="min-height: 100vh;">
+<form name="post_edit" class="signin_form valign container" novalidate>
 
-<div class="row">
-  <h2 class="brown-text text-darken-3">{{swigit.title}}</h2>
-</div>
-<div class="row">
-  <div class="chip brown lighten-4">
-    {{swigit.info}}
+  <div class="col s12 m6 offset-m6">
+    <input-field>
+      <input type="text" ng-model="signin.username" length="32" 
+        class="brown-text text-darken-2" required autofocus/>
+      <label class="brown-text">Username...</label>
+    </input-field>
   </div>
-  <div class="chip brown lighten-4">
-    {{swigit.date | date:format}}
+
+  <div class="col s12 m6 offset-m6">
+    <input-field>
+      <input type="text" ng-model="signin.password" length="32" 
+        class="brown-text text-darken-2" required/>
+      <label class="brown-text">Password...</label>
+    </input-field>
   </div>
-</div>
 
-<div class="row post-body">
-  <div class="col s12 m10 offset-m1">  
-    <div class="flow-text brown-text text-darken-2">
-      
-      {{swigit.content}}
-
-    </div>
+  <div class="fixed-action-btn vertical col s12 m6 offset-m6" style="bottom: 12px; right: 12px;">
+    <a tooltipped class="btn-floating btn-large brown lighten-3"
+      data-position="left" data-delay="50" data-tooltip="SIGNIN">
+      <i class="large material-icons brown-text text-lighten-1">vpn_key</i>
+    </a>
+    <ul>
+    <li>
+      <a tooltipped class="btn-floating amber lighten-5"
+        data-position="left" data-delay="50" data-tooltip="RESET PASSWORD">
+        <i class="material-icons amber-text text-accent-3">settings_backup_restore</i>
+      </a>
+    </li>
+    <li>
+      <a tooltipped class="btn-floating amber lighten-5"
+        data-position="left" data-delay="50" data-tooltip="SIGNUP">
+        <i class="material-icons amber-text text-accent-3">lock</i>
+      </a>
+    </li>
+    </ul>
   </div>
+
+</form>
 </div>
-
-
-
 
 </div>
