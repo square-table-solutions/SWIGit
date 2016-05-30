@@ -15,20 +15,59 @@ module.exports = {
 		const password = req.body.password;
 		const fullname = req.body.fullname;
 		const email = req.body.email;
-		const user = new User({
-			username:username,
-			password:password,
-			fullname:fullname,
-			email:email
+
+
+		new User({username:username})
+		.fetch()
+		.then(function(user) {
+			if(!user) {
+				new User({
+					username:username,
+					password:password,
+					fullname:fullname,
+					email:email
+				})
+				.save()
+				.then(function(data) {
+					fs.mkdir(path.join(__dirname,'../blog_posts/',username));
+				})
+				.catch(function(err) {
+					console.log(err)
+				})
+				.then(function(){
+					SubUtils.createToken(username, req, res);
+				})
+			}
+			else {
+				res.json({message:"Username is taken"});
+			}
 		})
-		.save()
-		.then(function(data) {
-			fs.mkdir(path.join(__dirname,'../blog_posts/',username));
-			res.status(200).send(data.user_id);
+	},
+
+	login: function(req, res) {
+
+		const username = req.body.username;
+		const password = req.body.password;
+
+		new User({username:username})
+		.fetch()
+		.then(function(user) {
+			if (!user) {
+				res.redirect('/login');
+			}
+			else {
+				user.comparePassword(password, function(isMatch) {
+					if (!isMatch) {
+						res.status(401).send("Password Incorrect");
+					}
+					else {
+						SubUtils.createToken(username, req, res);
+					}
+				});
+			}
 		})
-		.catch(function(err) {
-			console.log(err)
-		});
+
+
 	},
 
 	publish: function(req,res) {
@@ -61,7 +100,7 @@ module.exports = {
 						SubUtils.createTextDocument(userPath, url_slug, content, res);
 					});
 				}
-				else { 
+				else {
 					fs.unlink(path.join(userPath, url_slug), function() {
 						SubUtils.createTextDocument(userPath, url_slug, content, res);
 					});
@@ -84,14 +123,11 @@ module.exports = {
 
 		User.where('id', user_id).fetch({withRelated: ['posts']})
 		.then(function(user) {
-			let spaghetti = user.related('posts');
-			let meatballs = spaghetti.orderBy('created_at', 'ASC');
-			for ( let i = 0; i < spaghetti.models.length; i++) {
+			const spaghetti = user.related('posts');
 				//access to stored posts db entries here
-			}
 		});
 
-		fs.readdir(userPath, function(err, files) { 
+		fs.readdir(userPath, function(err, files) {
 			SubUtils.retrievePostsText(files, res, username, userPath)
 		});
 
@@ -118,4 +154,3 @@ module.exports = {
 	}
 
 };
-	

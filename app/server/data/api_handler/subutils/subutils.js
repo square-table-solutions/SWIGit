@@ -2,6 +2,9 @@
 
 const fs = require('fs');
 const path = require('path');
+const jwt = require('jwt-simple');
+const app = require('../../../server_config.js');
+const jwtTokenSecret = 'To gulp or swigit that is the question';
 
 module.exports = {
 
@@ -28,7 +31,16 @@ module.exports = {
 			else {
 				res.sendStatus(200);
 			}
-		});	
+		});
+	},
+
+	createToken: function(username, req, res) {
+		var token = jwt.encode({
+  		iss: username,
+  		exp: '720hr'
+			},
+			jwtTokenSecret);
+		res.status(200).send(token);
 	}
 
 }
