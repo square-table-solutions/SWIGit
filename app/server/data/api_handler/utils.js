@@ -24,13 +24,11 @@ module.exports = {
 		.save()
 		.then(function(data) {
 			fs.mkdir(path.join(__dirname,'../blog_posts/',username));
+			res.status(200).send(data.user_id);
 		})
 		.catch(function(err) {
 			console.log(err)
-		})
-		.then(function(){
-			res.sendStatus(200);
-		})
+		});
 	},
 
 	publish: function(req,res) {
