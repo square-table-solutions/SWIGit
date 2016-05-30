@@ -8,6 +8,11 @@ main {
   flex: 1 0 auto;
 }
 
+html,body {
+  font-family: 'Varela Round', sans-serif;
+  font-weight: 200;
+}
+
 nav {
   position: fixed;
   top: 0;
@@ -15,14 +20,16 @@ nav {
   z-index: 1000;
 }
 
-html,body {
-  font-family: 'Varela Round', sans-serif;
-  font-weight: 200;
-  /*padding-bottom: 100px;*/
-}
 
+
+.nav-view {
+  /*padding-top: 80px;*/
+}
 .main-view {
   /*padding-top: 80px;*/
+}
+.swig-view {
+  padding-top: 80px;
 }
 
 h1,h2,h3,h4,h5,h6 {
