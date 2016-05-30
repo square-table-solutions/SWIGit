@@ -14,8 +14,12 @@ angular.module('swigit.main_mdl', [])
       
   }])
 
-  .controller('sign_up_ctrl',['$scope',function($scope) {
-      
+  .controller('sign_up_ctrl',['$scope','auth_fac',function($scope,auth_fac) {
+      $scope.params = {};
+      $scope.signup = function(params) {
+        console.log(params);
+        auth_fac.signup(params);
+      }
   }]);
 
   
