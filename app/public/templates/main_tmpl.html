@@ -1,29 +1,3 @@
-<div class="container" ng-controller="main_ctrl">
-
-
-<div class="row">
-  <h2 class="brown-text text-darken-3">{{swigit.title}}</h2>
-</div>
-<div class="row">
-  <div class="chip brown lighten-4">
-    {{swigit.info}}
-  </div>
-  <div class="chip brown lighten-4">
-    {{swigit.date | date:format}}
-  </div>
-</div>
-
-<div class="row post-body">
-  <div class="col s12 m10 offset-m1">  
-    <div class="flow-text brown-text text-darken-2">
-      
-      {{swigit.content}}
-
-    </div>
-  </div>
-</div>
-
-
-
-
+<div class="main-view container">
+  <div ui-view></div>
 </div>

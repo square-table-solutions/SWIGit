@@ -11,11 +11,11 @@ angular.module('swigit.data_mdl', [])
 // 'db' structure example:
 // --->
     // const db = {
-    //   exampleFeedname: {
-    //     fullname: 'Example Feed Name',
+    //   lukas: {
+    //     fullname: 'LM Welinder',
     //     data: { feed: postArray, hash: postIndexByUrlSlug }
     //   },
-    //   anotherName: {
+    //   anotherUserName: {
     //     fullname: 'Another Name',
     //     data: { feed: postArray, hash: postIndexByUrlSlug }
     //   }

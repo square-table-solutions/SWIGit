@@ -4,6 +4,7 @@
 angular.module('swigit', [
   'ui.materialize',
   'ui.router',
+  'ngAnimate',
   'swigit.auth_mdl',
   'swigit.data_mdl',
   'swigit.admn_mdl',
@@ -16,29 +17,84 @@ angular.module('swigit', [
     '$urlRouterProvider',
     '$locationProvider',
     function($stateProvider,$urlRouterProvider,$locationProvider) {
-      // if rout not found, redirect to root (consider a 404 page?)
-      $urlRouterProvider.otherwise('/');
-      $stateProvider // application route handler
-        .state('main', {
+
+          const main = {
+            name: 'main',
             url: '/',
-            templateUrl: '/templates/main_tmpl.html',
-            controller: 'main_ctrl'
-          })
-        .state('post_edit', {
+            views: {
+              'footer_nav_view@': {
+                templateUrl: '/templates/auth/auth_nav_tmpl.html',
+                controller: 'auth_nav_ctrl'
+              },
+              '@': {
+                templateUrl: '/templates/main_tmpl.html',
+                controller: 'main_ctrl'
+              }
+            }
+          };
+
+          const sign_on = {
+            name: 'main.sign_on',
+            parent: main,
+            templateUrl: '/templates/auth/sign_on_tmpl.html',
+            controller: 'sign_on_ctrl'
+          };
+
+          const sign_up = {
+            name: 'main.sign_up',
+            parent: main,
+            templateUrl: '/templates/auth/sign_up_tmpl.html',
+            controller: 'sign_up_ctrl'
+          };
+
+          const admn = {
+            name: 'admn',
+            views: {
+              'header_nav_view@': {
+                templateUrl: '/templates/post/swig_nav_tmpl.html',
+                controller: 'swig_nav_ctrl'
+              },
+              '@': {
+                templateUrl: '/templates/swig_tmpl.html',
+                controller: 'admn_ctrl'
+              }
+            }
+          };
+
+          const admn_edit_state = {
+            name: 'admn.edit',
+            parent: admn,
             url: '/edit',
-            templateUrl: '/templates/post_edit_tmpl.html',
+            templateUrl: '/templates/admn/admn_edit_tmpl.html',
             resolve: {
               auth_user: ['$stateParams','auth_fac',function($stateParams,auth_fac) {
                 // authenticate user credentials here
-                // fetch all post data
+                // if editing current then fetch all post data
                 return true; // temp
               }]
             },
-            controller: 'post_edit_ctrl'
-          })
-        .state('post_feed', {
+            controller: 'admn_edit_ctrl'
+          };
+
+          const swig = {
+            name: 'swig',
+            views: {
+              'header_nav_view@': {
+                templateUrl: '/templates/post/swig_nav_tmpl.html',
+                controller: 'swig_nav_ctrl'
+              },
+              '@': {
+                templateUrl: '/templates/swig_tmpl.html',
+                controller: 'swig_ctrl'
+              }
+            }
+          };
+
+          const swig_feed_state = {
+            name: 'swig.feed',
+            parent: swig,
             url: '/:feed',
-            templateUrl: '/templates/post_feed_tmpl.html',
+            templateUrl: '/templates/post/post_feed_tmpl.html',
             resolve: {
               feed_data: ['$stateParams','data_fac',function($stateParams,data_fac) {
                 // resolve fetch before render
@@ -47,10 +103,13 @@ angular.module('swigit', [
               }]
             },
             controller: 'post_feed_ctrl'
-          }) // consider using sub-view for posts
-        .state('post_body', {
+          };
+          
+          const swig_body_state = {
+            name: 'swig.body',
+            parent: swig,
             url: '/:feed/:url_slug', 
-            templateUrl: '/templates/post_body_tmpl.html',
+            templateUrl: '/templates/post/post_body_tmpl.html',
             resolve: {
               post_data: ['$stateParams','data_fac',function($stateParams,data_fac) {
                 // resolve fetch before render
@@ -59,11 +118,29 @@ angular.module('swigit', [
               }]
             },
             controller: 'post_body_ctrl'
-          });
+          }
+
+      // if rout not found, redirect to root (consider a 404 page?)
+      $urlRouterProvider.otherwise('/');
+
+      $stateProvider // application route handler
+        .state(main)
+        .state(sign_on)
+        .state(sign_up)
+
+        .state(admn)
+        .state(admn_edit_state)
+
+        .state(swig)
+        .state(swig_feed_state) // post collection
+        .state(swig_body_state); // individual post
+        // .state('swig.prof', swig_prof_state);// author profile
         
-        $locationProvider.html5Mode(true);
-        // defer listeners, more info in .run
-        $urlRouterProvider.deferIntercept();
+      // set to use push-state, defaults to !# on older browsers
+      $locationProvider.html5Mode(true);
+
+      // defer listeners, more info in .run
+      $urlRouterProvider.deferIntercept();
     }])
 
   .run([
@@ -72,17 +149,31 @@ angular.module('swigit', [
     '$stateParams',
     '$urlRouter',
     function($rootScope,$state,$stateParams,$urlRouter) {
+
       $rootScope.$state = $state;
       $rootScope.$stateParams = $stateParams;
       // custom listeners now have access to $state & $stateParams
+      
       $rootScope.$on('$locationChageStart', function(evt,next,curr) {
+        // state change link pressed
         // middleware to run BEFORE loading new state
-        $('.main-view').hide();
       });
       $rootScope.$on('$locationChageSuccess', function(evt,next,curr) {
+        // router has resolved path
         // middleware to run AFTER loading new state
-        $('.main-view').fadeIn(600);
       });
+      $rootScope.$on('$stateChangeError', function(evt,next,curr) {
+        // router has resolved path
+        // middleware to run AFTER loading new state
+      });
+
+      $rootScope.$on('$viewContentLoading', function(evt, cfi){ 
+        // view is loading
+      });
+      $rootScope.$on('$viewContentLoaded', function(evt, cfi){ 
+        // view has loaded
+      });
+
       // initialize $urlRouter listener AFTER custom listeners
       $urlRouter.listen();
     }]);
