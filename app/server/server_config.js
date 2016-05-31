@@ -23,10 +23,6 @@ app.get('/*', route.serve.index);
 
 app.post('/_api/post', route.utils.publish);
 
-app.post('/signup', route.utils.signup);
-
-app.post('/login', route.utils.login);
-
 app.post('/_api/posts', route.utils.fetch_posts);
 
 app.post('/_api/delete_post', route.utils.delete_post);
