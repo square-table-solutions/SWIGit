@@ -58,7 +58,7 @@ module.exports = {
 		.fetch()
 		.then(function(user) {
 			if (!user) {
-				res.redirect('/signin');
+				res.redirect('/');
 			}
 			else {
 				user.comparePassword(password, function(isMatch) {
