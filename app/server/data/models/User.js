@@ -1,5 +1,5 @@
 "use strict"
-var db = require('../data_config.js');//need dependencies for database, bcrypt or other password generating/decoding middleware
+var db = require('../data_config.js');
 var Post = require('./Post.js')
 var bcrypt = require('bcrypt-nodejs');
 var Promise = require('bluebird');

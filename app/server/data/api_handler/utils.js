@@ -10,12 +10,11 @@ const SubUtils = require('./subutils/subutils.js');
 
 module.exports = {
 
-	createUserProfile: function(req, res) {
+	signup: function(req, res) {
 		const username = req.body.username;
 		const password = req.body.password;
 		const fullname = req.body.fullname;
 		const email = req.body.email;
-
 
 		new User({username:username})
 		.fetch()
@@ -44,7 +43,7 @@ module.exports = {
 		})
 	},
 
-	login: function(req, res) {
+	signin: function(req, res) {
 
 		const username = req.body.username;
 		const password = req.body.password;
