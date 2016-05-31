@@ -2,26 +2,11 @@
 
 const fs = require('fs');
 const path = require('path');
-const jwt = require('jwt-simple');
-const app = require('../../../server_config.js');
-const jwtTokenSecret = 'To gulp or swigit that is the question';
+const uuid = require('uuid4');
+const nJwt = require('njwt');
+const signingKey = uuid();
 
 module.exports = {
-
-	retrievePostsText: function(filenames, res, username, userPath) {
-		let results = [];
-		return Promise.all(filenames.map(function(file) {
-			fs.readFile(path.join(userPath, file), 'utf-8', function(err, data) {
-				if (err) {
-					console.error(err);
-				}
-				results.push({title:file,content:data});
-				if (results.length === filenames.length) {
-					res.status(200).send({username:username, posts:results});
-				}
-			});
-		}))
-	},
 
 	createTextDocument: function(userPath, url_slug, content, res) {
 		fs.writeFile(path.join(userPath, url_slug), content, 'utf-8', function(err){
@@ -29,17 +14,18 @@ module.exports = {
 				console.log(err)
 			}
 			else {
-				res.sendStatus(200);
+				res.status(200).send({text:content});
 			}
 		});
 	},
 
 	createToken: function(username, req, res) {
-		var token = jwt.encode({
-  		iss: username,
-  		exp: '720hr'
-			},
-			jwtTokenSecret);
+		const claims = {
+			sub:username,
+			iss:"swigit.com"
+		}
+		const jwt = nJwt.create(claims,signingKey);
+		const token = jwt.compact();
 		res.status(200).send(token);
 	}
 

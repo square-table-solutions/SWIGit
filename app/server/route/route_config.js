@@ -26,8 +26,8 @@ exports.serve = {
 };
 
 exports.utils = {
-	signin: function(req,res) {
-    Utils.signin(req,res);
+	signon: function(req,res) {
+    Utils.signon(req,res);
 	},
 
 	signup: function(req,res) {
