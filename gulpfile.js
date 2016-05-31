@@ -54,24 +54,13 @@ gulp.task('build-dist', function() {
 
 
 gulp.task('dev-watch', function() {
-    gulp.watch(fp.server.all.js, function() {
-      run.nodemon({
+    run.nodemon({
         script: 'app/server/index.js',
         tasks: ['lint-js']
       });
+    gulp.watch(fp.client.dist.js, ['build-js-dist']);
     });
-    gulp.watch(fp.client.dist.js, function() {
-      run.nodemon({
-        script: 'app/server/index.js',
-        tasks: ['build-js-dist']
-      });
-    });
-    gulp.watch(fp.client.dist.css, function() {
-      run.nodemon({
-        script: 'app/server/index.js',
-        tasks: ['build-css-dist']
-      });
-    });
+    gulp.watch(fp.client.dist.css, ['build-css-dist']);
 });
 
 gulp.task('dev', run.sequence(
