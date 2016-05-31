@@ -1,11 +1,12 @@
-<div class="container"  ng-controller="main_ctrl">
+<div class="container">
 
 <div class="valign-wrapper" style="min-height: 100vh;">
-<form name="sign_on" class="sign-in-form valign container" novalidate>
+<form name="sign_on" class="sign-in-form valign container" 
+  ng-submit="signon(params)" novalidate>
 
   <div class="col s12 m6 offset-m6">
     <input-field>
-      <input type="text" ng-model="signin.username" 
+      <input type="text" ng-model="params.username" 
         class="brown-text text-darken-2" required autofocus/>
       <label class="brown-text">Username...</label>
     </input-field>
@@ -13,10 +14,15 @@
 
   <div class="col s12 m6 offset-m6">
     <input-field>
-      <input type="password" ng-model="signin.password" 
+      <input type="password" ng-model="params.password" 
         class="brown-text text-darken-2" required/>
       <label class="brown-text">Password...</label>
     </input-field>
+  </div>
+
+  <div class="col s12 m6 offset-m6">
+    <button class="btn brown lighten-3 bown-text text-darken-1 align-right" 
+      type="submit">SUBMIT</button>
   </div>
 
 </form>

@@ -10,8 +10,12 @@ angular.module('swigit.main_mdl', [])
       
   }])
 
-  .controller('sign_on_ctrl',['$scope',function($scope) {
-      
+  .controller('sign_on_ctrl',['$scope','auth_fac',function($scope,auth_fac) {
+      $scope.params = {};
+      $scope.signon = function(params) {
+        console.log(params);
+        auth_fac.signon(params);
+      }
   }])
 
   .controller('sign_up_ctrl',['$scope','auth_fac',function($scope,auth_fac) {

@@ -7,11 +7,16 @@ angular.module('swigit.auth_mdl', [])
     const GET = (params) => $http({method:'GET', url:'/_api/auth', data:params});
     const POST = (params) => $http({method:'POST', url:'/_api/auth', data:params});
 
-    const signin = function(params) {
+    const signon = function(params) {
       return GET(params)
         .then(function(res) {
-          $window.localStorage.setItem('swigit.bling', res);
-          $state.go('edit');
+          console.log(res);
+          let session = JSON.stringify({
+            username:params.username,
+            token: res
+          });
+          $window.localStorage.setItem('swigit.bling', session);
+          $state.go('admn.edit');
         })
         .catch(function(err) {
           console.error(err);
@@ -22,7 +27,11 @@ angular.module('swigit.auth_mdl', [])
     const signup = function(params) {
       return POST(params)
         .then(function(res) {
-          $window.localStorage.setItem('swigit.bling', res);
+          let session = JSON.stringify({
+            username:params.username,
+            token: res
+          });
+          $window.localStorage.setItem('swigit.bling', session);
           $state.go('admn.edit');
         })
         .catch(function(err) {
@@ -34,7 +43,7 @@ angular.module('swigit.auth_mdl', [])
     
 
     return {
-      signin: signin,
+      signon: signon,
       signup: signup
     };
 
