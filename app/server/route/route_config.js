@@ -26,12 +26,12 @@ exports.serve = {
 };
 
 exports.utils = {
-	login: function(req,res) {
-    Utils.login(req,res);
+	signin: function(req,res) {
+    Utils.signin(req,res);
 	},
 
 	signup: function(req,res) {
-    Utils.createUserProfile(req, res);
+    Utils.singup(req, res);
 	},
 
 	publish: function(req,res) {
