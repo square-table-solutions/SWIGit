@@ -43,7 +43,7 @@ module.exports = {
 		})
 	},
 
-	signin: function(req, res) {
+	signon: function(req, res) {
 
 		const username = req.body.username;
 		const password = req.body.password;
@@ -52,7 +52,7 @@ module.exports = {
 		.fetch()
 		.then(function(user) {
 			if (!user) {
-				res.redirect('/login');
+				res.redirect('/');
 			}
 			else {
 				user.comparePassword(password, function(isMatch) {

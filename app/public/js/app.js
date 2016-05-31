@@ -25,7 +25,7 @@ angular.module('swigit', [
             views: {
               'footer_nav_view@': {
                 templateUrl: '/templates/auth/auth_nav_tmpl.html',
-                controller: 'auth_nav_ctrl'
+                // controller: 'auth_nav_ctrl'
               },
               '@': {
                 templateUrl: '/templates/main_tmpl.html',
