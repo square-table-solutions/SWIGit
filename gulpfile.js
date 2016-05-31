@@ -55,7 +55,6 @@ gulp.task('build-dist', function() {
 
 gulp.task('dev-watch', function() {
     run.nodemon({
-        script: 'app/server/index.js',
         tasks: ['lint-js']
       });
     gulp.watch(fp.client.dist.js, ['build-js-dist']);
