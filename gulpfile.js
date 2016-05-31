@@ -59,7 +59,6 @@ gulp.task('dev-watch', function() {
         tasks: ['lint-js']
       });
     gulp.watch(fp.client.dist.js, ['build-js-dist']);
-    });
     gulp.watch(fp.client.dist.css, ['build-css-dist']);
 });
 
