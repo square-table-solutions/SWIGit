@@ -31,7 +31,7 @@ exports.utils = {
 	},
 
 	signup: function(req,res) {
-    Utils.singup(req, res);
+    Utils.signup(req, res);
 	},
 
 	publish: function(req,res) {
@@ -46,3 +46,5 @@ exports.utils = {
     Utils.delete_post(req,res);
   }
 }
+
+module.exports;

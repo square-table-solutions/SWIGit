@@ -75,9 +75,19 @@ angular.module('swigit.data_mdl', [])
         .catch((err) => ( console.error(err) )); //TODO: consider redirecting to error page
     };
 
+    const upd_post = function(params) {
+      params.username = $window.localStorage.getItem('swigit.bling');
+      if(!params)
+        throw error('Invalid Post Data!');
+      return POST(params)
+        .then((resp) => (console.log(resp)))
+        .catch((err) => ( console.error(err) )); //TODO: consider redirecting to error page
+    };
+
     return {
       get_feed: get_feed,
-      get_post: get_post
+      get_post: get_post,
+      upd_post: upd_post
     };
 
   }]);
