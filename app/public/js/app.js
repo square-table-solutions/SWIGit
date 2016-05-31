@@ -151,7 +151,7 @@ angular.module('swigit', [
       return {
         request: function(req) {
         let jwt = $window.localStorage.getItem('swigit.bling');
-        req.headers['x-access-token'] = jwt;
+        req.headers['x-access-token'] = jwt.token;
         req.headers['Allow-Control-Allow-Origin'] = '*';
         return req;
       }};
