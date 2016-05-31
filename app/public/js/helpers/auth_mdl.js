@@ -31,14 +31,11 @@ angular.module('swigit.auth_mdl', [])
         });
     };
 
-    const isvalid = function() {
-
-    };
+    
 
     return {
       signin: signin,
-      signup: signup,
-      isvalid: isvalid
+      signup: signup
     };
 
   }]);

@@ -15,8 +15,9 @@ angular.module('swigit', [
   .config([
     '$stateProvider',
     '$urlRouterProvider',
+    '$httpProvider',
     '$locationProvider',
-    function($stateProvider,$urlRouterProvider,$locationProvider) {
+    function($stateProvider,$urlRouterProvider,$httpProvider,$locationProvider) {
 
           const main = {
             name: 'main',
@@ -140,9 +141,22 @@ angular.module('swigit', [
       $locationProvider.html5Mode(true);
 
       // defer listeners, more info in .run
-      $urlRouterProvider.deferIntercept();
+      // $urlRouterProvider.deferIntercept();
+
+      // attach authentication token to http requests
+      $httpProvider.interceptors.push('attach_tokens');
     }])
 
+  .factory('attach_tokens', ['$window',function($window) {
+      return {
+        request: function(req) {
+        let jwt = $window.localStorage.getItem('swigit.bling');
+        req.headers['x-access-token'] = jwt;
+        req.headers['Allow-Control-Allow-Origin'] = '*';
+        return req;
+      }};
+    }])
+  
   .run([
     '$rootScope',
     '$state',
@@ -175,5 +189,7 @@ angular.module('swigit', [
       });
 
       // initialize $urlRouter listener AFTER custom listeners
-      $urlRouter.listen();
+      // $urlRouter.listen();
     }]);
+
+  

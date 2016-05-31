@@ -21,7 +21,7 @@ gulp.task('build-js-deps', function() {
 });
 
 gulp.task('build-js-dist', function() {
-  return gulp.src(client.dist.js)
+  return gulp.src(fp.client.dist.js)
     .pipe(run.ngAnnotate())
     .pipe(run.transpile( {presets: ['es2015']} ))
     .pipe(run.concat('swigit_client_dist.min.js'))
@@ -37,7 +37,7 @@ gulp.task('build-css-deps', function() {
 });
 
 gulp.task('build-css-dist', function() {
-  return gulp.src(client.dist.css)
+  return gulp.src(fp.client.dist.css)
     .pipe(run.concat('swigit_client_dist.min.css'))
     .pipe(run.compress.css())
     .pipe(gulp.dest(fp.dest.css));
