@@ -104,11 +104,11 @@ angular.module('swigit', [
             },
             controller: 'post_feed_ctrl'
           };
-          
+
           const swig_body_state = {
             name: 'swig.body',
             parent: swig,
-            url: '/:feed/:url_slug', 
+            url: '/:feed/:url_slug',
             templateUrl: '/templates/post/post_body_tmpl.html',
             resolve: {
               post_data: ['$stateParams','data_fac',function($stateParams,data_fac) {
@@ -135,7 +135,7 @@ angular.module('swigit', [
         .state(swig_feed_state) // post collection
         .state(swig_body_state); // individual post
         // .state('swig.prof', swig_prof_state);// author profile
-        
+
       // set to use push-state, defaults to !# on older browsers
       $locationProvider.html5Mode(true);
 
@@ -153,12 +153,12 @@ angular.module('swigit', [
       $rootScope.$state = $state;
       $rootScope.$stateParams = $stateParams;
       // custom listeners now have access to $state & $stateParams
-      
-      $rootScope.$on('$locationChageStart', function(evt,next,curr) {
+
+      $rootScope.$on('$locationChangeStart', function(evt,next,curr) {
         // state change link pressed
         // middleware to run BEFORE loading new state
       });
-      $rootScope.$on('$locationChageSuccess', function(evt,next,curr) {
+      $rootScope.$on('$locationChangeSuccess', function(evt,next,curr) {
         // router has resolved path
         // middleware to run AFTER loading new state
       });
@@ -167,25 +167,13 @@ angular.module('swigit', [
         // middleware to run AFTER loading new state
       });
 
-      $rootScope.$on('$viewContentLoading', function(evt, cfi){ 
+      $rootScope.$on('$viewContentLoading', function(evt, cfi){
         // view is loading
       });
-      $rootScope.$on('$viewContentLoaded', function(evt, cfi){ 
+      $rootScope.$on('$viewContentLoaded', function(evt, cfi){
         // view has loaded
       });
 
       // initialize $urlRouter listener AFTER custom listeners
       $urlRouter.listen();
     }]);
-
-
-
-
-
-
-
-
-
-
-
-

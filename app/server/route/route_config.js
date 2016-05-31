@@ -27,7 +27,7 @@ exports.serve = {
 
 exports.utils = {
 	login: function(req,res) {
-
+    Utils.login(req,res);
 	},
 
 	signup: function(req,res) {
@@ -35,15 +35,14 @@ exports.utils = {
 	},
 
 	publish: function(req,res) {
-		Utils.publish(req, res);
+		Utils.publish(req,res);
 	},
 
   fetch_posts: function(req,res) {
     Utils.fetch_posts(req,res);
   },
 
-  delete_post: function(req, res) {
-    Utils.delete_post(req, res);
+  delete_post: function(req,res) {
+    Utils.delete_post(req,res);
   }
 }
-
