@@ -44,7 +44,7 @@ module.exports = {
 		})
 	},
 
-	signin: function(req, res) {
+	signon: function(req, res) {
 
 		const username = req.body.username;
 		const password = req.body.password;
@@ -67,7 +67,6 @@ module.exports = {
 			}
 		})
 
-
 	},
 
 	publish: function(req,res) {
@@ -76,8 +75,6 @@ module.exports = {
 		const url_slug = req.body.url_slug;
 		const content = req.body.content;
 		const userPath = path.join(__dirname,'../blog_posts', username);
-		console.log("title: ",title);
-		console.log("content: ",content);
 		new User({
 			username:username
 		})
@@ -100,7 +97,6 @@ module.exports = {
 					})
 					.save()
 					.then(function(blogPost) {
-						console.log(blogPost)
 						SubUtils.createTextDocument(userPath, url_slug, content, res);
 					});
 				}
@@ -151,12 +147,8 @@ module.exports = {
 			.then(function(data) {
 				res.status(200).send(data)
 			})
-
 		});
 
-		// fs.readdir(userPath, function(err, files) {
-		// 	SubUtils.retrievePostsText(files, res, username, userPath)
-		// });
 	},
 
 	fetch_entire_post: function(req, res) {
@@ -189,7 +181,9 @@ module.exports = {
 			})
 			.destroy()
 			.then(function() {
-				fs.unlink(path.join(userPath, url_slug))
+				fs.unlink(path.join(userPath, url_slug), function(){
+					res.status(200).json({message:"post deleted"});
+				});
 			});
 		});
 
