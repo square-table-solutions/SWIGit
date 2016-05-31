@@ -31,7 +31,7 @@ exports.utils = {
 	},
 
 	signup: function(req,res) {
-    Utils.singup(req, res);
+    Utils.signup(req, res);
 	},
 
 	publish: function(req,res) {
@@ -42,7 +42,12 @@ exports.utils = {
     Utils.fetch_posts(req,res);
   },
 
+  fetch_entire_post:function(req,res) {
+    Utils.fetch_entire_post(req,res);
+  },
+
   delete_post: function(req,res) {
     Utils.delete_post(req,res);
   }
 }
+module.exports;

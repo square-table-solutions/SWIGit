@@ -29,6 +29,7 @@ module.exports = {
 				.save()
 				.then(function(data) {
 					fs.mkdir(path.join(__dirname,'../blog_posts/',username));
+					console.log(username," profile created");
 				})
 				.catch(function(err) {
 					console.log(err)
@@ -52,7 +53,7 @@ module.exports = {
 		.fetch()
 		.then(function(user) {
 			if (!user) {
-				res.redirect('/login');
+				res.redirect('/signin');
 			}
 			else {
 				user.comparePassword(password, function(isMatch) {
@@ -72,9 +73,11 @@ module.exports = {
 	publish: function(req,res) {
 		const username = req.body.username;
 		const title = req.body.title;
-		const url_slug = title.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'_').replace(/<[^>]+>/gm, '');
+		const url_slug = req.body.url_slug;
 		const content = req.body.content;
 		const userPath = path.join(__dirname,'../blog_posts', username);
+		console.log("title: ",title);
+		console.log("content: ",content);
 		new User({
 			username:username
 		})
@@ -92,10 +95,12 @@ module.exports = {
 					user_id:user.id,
 					title:title,
 					filepath:path.join(userPath, url_slug),
-					url_slug:url_slug
+					url_slug:url_slug,
+					excerpt:content.slice(0, 300) + "..."
 					})
 					.save()
-					.then(function() {
+					.then(function(blogPost) {
+						console.log(blogPost)
 						SubUtils.createTextDocument(userPath, url_slug, content, res);
 					});
 				}
@@ -117,24 +122,62 @@ module.exports = {
 
 	fetch_posts: function(req,res) {
 		const username = req.body.username;
-		const user_id = req.body.user_id;
+		const url_slug = req.body.url_slug;
 		const userPath = path.join(__dirname, '../blog_posts', username);
 
-		User.where('id', user_id).fetch({withRelated: ['posts']})
+		new User({username:username})
+		.fetch()
 		.then(function(user) {
-			const spaghetti = user.related('posts');
-				//access to stored posts db entries here
+			user.where({'id': user.id})
+			.fetch({withRelated:['posts']})
+			.then(function(user) {
+				const obj = {
+					fullname:user.attributes.fullname,
+					feed:[]
+				}
+				const PostModels = user.related('posts').models;
+				for(let i = 0; i < PostModels.length; i++) {
+					obj.feed.push({
+						fullname:user.attributes.fullname,
+						username:user.attributes.username,
+						title:PostModels[i].attributes.title,
+						created_at:PostModels[i].attributes.created_at,
+						url_slug:PostModels[i].attributes.url_slug,
+						excerpt:PostModels[i].attributes.excerpt
+					});
+				}
+				return obj;
+			})
+			.then(function(data) {
+				res.status(200).send(data)
+			})
+
 		});
 
-		fs.readdir(userPath, function(err, files) {
-			SubUtils.retrievePostsText(files, res, username, userPath)
-		});
+		// fs.readdir(userPath, function(err, files) {
+		// 	SubUtils.retrievePostsText(files, res, username, userPath)
+		// });
+	},
+
+	fetch_entire_post: function(req, res) {
+		const username = req.body.username;
+		const url_slug = req.body.url_slug;
+		const userPath = path.join(__dirname, '../blog_posts', username);
+
+		fs.readFile(path.join(userPath, url_slug), 'utf-8', function(err, data){
+			if(err) {
+				console.log("Error received ",err)
+			}
+			else {
+				res.status(200).send({text:data});
+			}
+		})
 
 	},
 
 	delete_post: function(req, res) {
 		const username = req.body.username;
-		const url_slug = req.body.title.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'_').replace(/<[^>]+>/gm, '');
+		const url_slug = req.body.url_slug;
 		const userPath = path.join(__dirname, '../blog_posts', username);
 
 		new User({username:username})
