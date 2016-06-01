@@ -1,6 +1,7 @@
 <div class="container">
 
 <div class="valign-wrapper" style="min-height: 100vh;">
+
 <form name="sign_up" class="sign-up-form valign container" 
   ng-submit="signup(params)" novalidate>
 
@@ -22,7 +23,7 @@
 
   <div class="col s12 m6 offset-m6">
     <input-field>
-      <input type="text" ng-model="params.email" 
+      <input type="email" ng-model="params.email" 
         class="brown-text text-darken-2" required autofocus/>
       <label class="brown-text">Email...</label>
     </input-field>
@@ -36,8 +37,10 @@
     </input-field>
   </div>
 
+  <input type="submit" style="display: none;"/>
 
 </form>
+
 </div>
 
 </div>

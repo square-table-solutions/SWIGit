@@ -4,14 +4,16 @@
 
   <div class="col s12 m10 offset-m1">
     <input-field>
-      <input type="text" ng-model="post.tags" length="75" value="{{post.url_slug}}" class="brown-text text-darken-2" required autofocus/>
+      <input type="text" ng-model="post.title" length="75" 
+        value="{{post.title}}" ng-keydown="to_slug(post.title)"
+        class="brown-text text-darken-2" required autofocus/>
       <label class="brown-text">Title...</label>
     </input-field>
   </div>
 
   <div class="col s12 m10 offset-m1">
     <input-field>
-      <input type="text" ng-model="post.tags" length="75" value="{{post.url_slug}}" class="brown-text text-darken-2"/>
+      <input type="text" ng-model="post.url_slug" length="75" value="{{post.url_slug}}" class="brown-text text-darken-2"/>
       <label class="brown-text">URL-Slug...</label>
     </input-field>
   </div>
@@ -31,27 +33,8 @@
       <label class="brown-text">Content...</label>
     </input-field>
   </div>
-  
-  <div class="fixed-action-btn vertical" style="bottom: 12px; right: 12px;">
-    <a class="btn-floating btn-large brown lighten-3">
-      <i class="large material-icons brown-text text-lighten-1">mode_edit</i>
-    </a>
-    <ul>
-      <li><a tooltipped class="btn-floating amber lighten-5"
-        data-position="left" data-delay="50" data-tooltip="PLAN">
-        <i class="material-icons amber-text text-accent-3">schedule</i>
-      </a></li>
-      <li><a tooltipped class="btn-floating amber lighten-5"
-        data-position="left" data-delay="50" data-tooltip="POST"
-        ng-click="submit(post)">
-        <i class="material-icons amber-text text-accent-3">input</i>
-      </a></li>
-      <li><a tooltipped class="btn-floating amber lighten-5"
-        data-position="left" data-delay="50" data-tooltip="SAVE">
-        <i class="material-icons amber-text text-accent-3">system_update_alt</i>
-      </a></li>
-    </ul>
-  </div>
+
+  <div ui-view="edit_nav_view"></div>
 
 </form>
 
