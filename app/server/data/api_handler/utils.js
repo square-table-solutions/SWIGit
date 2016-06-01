@@ -16,6 +16,11 @@ module.exports = {
 		const fullname = req.body.fullname;
 		const email = req.body.email;
 
+		if (username.toLowerCase() === "swigit-admin") {
+			res.status(400).json({message:"You can't have that name"});
+			return;
+		}
+
 		new User({username:username})
 		.fetch()
 		.then(function(user) {

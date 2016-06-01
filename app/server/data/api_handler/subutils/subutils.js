@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const uuid = require('uuid4');
 const nJwt = require('njwt');
-const signingKey = uuid();
+const signinKey = uuid();
 
 module.exports = {
 
@@ -24,9 +24,11 @@ module.exports = {
 			sub:username,
 			iss:"swigit.com"
 		}
-		const jwt = nJwt.create(claims,signingKey);
+		const jwt = nJwt.create(claims,signinKey);
 		const token = jwt.compact();
 		res.status(200).send(token);
-	}
+	},
+
+	signinKey:signinKey
 
 }
