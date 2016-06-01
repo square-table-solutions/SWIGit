@@ -1,0 +1,25 @@
+<div class="container">
+
+<form name="prof_edit" class="prof_edit" novalidate>
+
+  <div class="col s12 m10 offset-m1">
+    <input-field>
+      <textarea ng-model="prof.content" class="materialize-textarea brown-text text-darken-2" required autofocus>
+        {{prof.content}}
+      </textarea>
+      <label class="brown-text">Profile Content...</label>
+    </input-field>
+  </div>
+
+  <div class="col s12 m10 offset-m1">
+    <input-field>
+      <input type="text" ng-model="prof.tags" value="{{prof.tags}}" class="brown-text text-darken-2" required/>
+      <label class="brown-text">Keywords...</label>
+    </input-field>
+  </div>
+
+  <div ui-view="edit_nav_view"></div>
+
+</form>
+
+</div>

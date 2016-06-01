@@ -2,23 +2,20 @@
 // client auth helpers
 angular.module('swigit.auth_mdl', [])
 
-  .factory('auth_fac',['$http','$state','$window',function($http,$state,$window) {
+  .factory('auth_fac',['$http','$state','auth_sess',function($http,$state,auth_sess) {
 
-    const GET = (api,params) => $http({method:'GET', url:`/_api/auth/${api}`, data:params});
+    // const GET = (api,params) => $http({method:'GET', url:`/_api/auth/${api}`, data:params});
     const POST = (api,params) => $http({method:'POST', url:`/_api/auth/${api}`, data:params});
 
     const signon = function(params) {
       return POST('signon',params)
         .then(function(res) {
-          console.log(res);
-          let session = JSON.stringify({
-            username: params.username,
-            token: res.data
-          });
-          $window.localStorage.setItem('swigit.bling', session);
-          $state.go('admn.edit');
-          return false;
-        })
+            auth_sess.set({
+              username: params.username,
+              token: res.data
+            })
+            return $state.go('admn.edit');
+          })
         .catch(function(err) {
           console.error(err);
           return err;
@@ -28,26 +25,64 @@ angular.module('swigit.auth_mdl', [])
     const signup = function(params) {
       return POST('signup',params)
         .then(function(res) {
-          console.log(res);
-          let session = JSON.stringify({
-            username: params.username,
-            token: res.data
-          });
-          $window.localStorage.setItem('swigit.bling', session);
-          $state.go('admn.edit');
-          return false;
-        })
+            auth_sess.set({
+              username: params.username,
+              token: res.data
+            })
+            return $state.go('admn.edit');
+          })
         .catch(function(err) {
           console.error(err);
           return err;
         });
     };
 
-    
+    const log_out = function() {
+      auth_sess.end();
+      return $state.go('main.sign_on');
+    }
 
+    const session = {
+      username: function() {
+        return auth_sess.get().username;
+      },
+      token: function () {
+        return auth_sess.get().token;
+      }
+    }
+    
     return {
       signon: signon,
-      signup: signup
+      signup: signup,
+      logout: log_out,
+      sess: session
+    };
+
+  }])
+
+  .factory('auth_sess',['$http','$state','$window',function($http,$state,$window) {
+
+    const session = {};
+
+    const set_session = function(params) {
+      return $window.localStorage.setItem('swigit.bling', JSON.stringify(params));
+    };
+
+    const get_session = function() {
+      if(!session)
+        angular.extend(session, $window.localStorage.getItem('swigit.bling'));     
+      return session;
+    };
+
+    const end_session = function() {
+      return $window.localStorage.removeItem('swigit.bling');
+    };
+
+    
+    return {
+      set: set_session,
+      get: get_session,
+      end: end_session
     };
 
   }]);
