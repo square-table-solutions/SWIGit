@@ -20,7 +20,6 @@ const User = db.Model.extend({
 		return hashPassword(this.get('password'), null, null).bind(this)
 		.then(function(hash) {
 			this.set('password', hash);
-			console.log("Inside hashPassword ", hash);
 		});
 	},
 

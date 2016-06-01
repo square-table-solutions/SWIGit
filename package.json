@@ -42,6 +42,7 @@
     "jsonwebtoken": "^7.0.0",
     "jwt-simple": "^0.5.0",
     "knex": "^0.11.3",
+    "njwt": "^0.2.3",
     "passport": "^0.3.2",
     "pg": "^4.5.5",
     "sqlite3": "^3.1.4"
