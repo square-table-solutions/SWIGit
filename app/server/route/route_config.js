@@ -26,12 +26,12 @@ exports.serve = {
 };
 
 exports.utils = {
-	signin: function(req,res) {
-    Utils.signin(req,res);
+	signon: function(req,res) {
+    Utils.signon(req,res);
 	},
 
 	signup: function(req,res) {
-    Utils.singup(req, res);
+    Utils.signup(req, res);
 	},
 
 	publish: function(req,res) {
@@ -46,3 +46,5 @@ exports.utils = {
     Utils.delete_post(req,res);
   }
 }
+
+module.exports;
