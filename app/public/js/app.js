@@ -249,7 +249,7 @@ angular.module('swigit', [
                 return true;
               }]
             },
-            controller: 'swig_body_ctrl'
+            controller: 'post_body_ctrl'
           };
 
       // if rout not found, redirect to root (consider a 404 page?)
@@ -285,9 +285,10 @@ angular.module('swigit', [
   .factory('attach_tokens', ['$window',function($window) {
       return {
         request: function(req) {
-            let jwt = $window.localStorage.getItem('swigit.bling');
+            const jwt = JSON.parse($window.localStorage.getItem('swigit.bling'));
+            console.log(jwt);
             if(jwt) {
-              req.headers['x-access-token'] = jwt.token || '';
+              req.headers['x-access-token'] = jwt.token;
               req.headers['Allow-Control-Allow-Origin'] = '*';
             }
             return req;

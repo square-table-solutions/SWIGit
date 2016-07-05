@@ -64,8 +64,10 @@ gulp.task('dev-watch', function() {
 gulp.task('dev', run.sequence(
   'lint-js',
   [
-    'build-deps',
-    'build-dist'
+    'build-js-deps',
+    'build-js-dist',
+    'build-css-deps',
+    'build-css-dist'
   ],
   'dev-watch'
 ));
