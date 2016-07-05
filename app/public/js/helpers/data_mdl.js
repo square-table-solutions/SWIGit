@@ -6,7 +6,7 @@ angular.module('swigit.data_mdl', [])
 
     // http requests with params object, returns promise
     const GET = (params) => $http({method:'GET', url:'/_api/posts', data:params});
-    const POST = (params) => $http({method:'POST', url:'/_api/posts', data:params});
+    const POST = (params) => $http({method:'POST', url:'/_api/post', data:params});
 
 // 'db' structure example:
 // --->
@@ -80,11 +80,10 @@ angular.module('swigit.data_mdl', [])
           .catch((err) => ( post.reject(err) )); //TODO: consider redirecting to error page
       else post.resolve(db[params.feed || params.username].data.hash[params.url_slug])
       return post.promise;
-      
     };
 
     const upd_post = function(params) {
-      params.username = $window.localStorage.getItem('swigit.bling');
+      params.username = auth_fac.sess.username();
       if(!params)
         throw error('Invalid Post Data!');
       return POST(params)
@@ -93,6 +92,7 @@ angular.module('swigit.data_mdl', [])
     };
 
     return {
+      db: db,
       get_feed: get_feed,
       get_post: get_post,
       upd_post: upd_post

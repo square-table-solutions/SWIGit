@@ -42,7 +42,7 @@ angular.module('swigit.auth_mdl', [])
       return $state.go('main.sign_on');
     }
 
-    const session = {
+    const sess = {
       username: function() {
         return auth_sess.get().username;
       },
@@ -55,23 +55,24 @@ angular.module('swigit.auth_mdl', [])
       signon: signon,
       signup: signup,
       logout: log_out,
-      sess: session
+      sess: sess
     };
 
   }])
 
   .factory('auth_sess',['$http','$state','$window',function($http,$state,$window) {
 
-    const session = {};
+    // const session = {};
 
     const set_session = function(params) {
       return $window.localStorage.setItem('swigit.bling', JSON.stringify(params));
     };
 
     const get_session = function() {
-      if(!session)
-        angular.extend(session, $window.localStorage.getItem('swigit.bling'));     
-      return session;
+        let session = $window.localStorage.getItem('swigit.bling');
+        // angular.extend(session, JSON.parse(s));
+      console.log(session);
+      return JSON.parse(session);
     };
 
     const end_session = function() {

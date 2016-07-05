@@ -24,6 +24,8 @@ angular.module('swigit.admn_mdl', [])
     'auth_fac',
     function($scope,$state,$stateParams,data_fac,auth_fac) {
 
+      $scope.post = {};
+
       // data_fac.get_post({
       //     feed: auth_fac.sess.username(),
       //     url_slug: $stateParams.url_slug
@@ -33,11 +35,12 @@ angular.module('swigit.admn_mdl', [])
       //     $state.go('edit({url_slug: "new"})');
       //   });
 
-      if($stateParams.url_slug !== 'new') {
+      if(!$stateParams || $stateParams.url_slug !== 'new') {
         $state.go('admn.edit',{url_slug:'new'})
       }
 
       $scope.submit = function(params) {
+        console.log(params);
         data_fac.upd_post(params).
           then(function(res) {
             console.log(res);
