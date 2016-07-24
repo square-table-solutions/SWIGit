@@ -3,4 +3,5 @@ app/server/data/db/swigit.sqlite
 app/public/libs
 app/public/build
 app/server/data/db/
+.idea
 

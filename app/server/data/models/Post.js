@@ -8,12 +8,9 @@ const Post = db.Model.extend({
 	hasTimeStamps: true,
 
 	user: function() {
-		return this.hasOne(User);
+		return this.belongsTo(User, this.user_id);
 	}
-
 
 });
 
 module.exports = Post;
-
-

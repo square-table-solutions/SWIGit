@@ -2,11 +2,11 @@
 // client data helpers
 angular.module('swigit.data_mdl', [])
 
-  .factory('data_fac',['$http','auth_fac',function($http,auth_fac) {
+  .factory('data_fac',['$q','$http','auth_fac',function($q,$http,auth_fac) {
 
     // http requests with params object, returns promise
     const GET = (params) => $http({method:'GET', url:'/_api/posts', data:params});
-    const POST = (params) => $http({method:'POST', url:'/_api/posts', data:params});
+    const POST = (params) => $http({method:'POST', url:'/_api/post', data:params});
 
 // 'db' structure example:
 // --->
@@ -20,7 +20,9 @@ angular.module('swigit.data_mdl', [])
     //     data: { feed: postArray, hash: postIndexByUrlSlug }
     //   }
     // };
-    const db = {};
+    const db = {
+
+    };
 
     /**
      * [ 'Feed' constructor, accepts data from server and indexes
@@ -49,11 +51,11 @@ angular.module('swigit.data_mdl', [])
      *                                    return promise              ]
      */
     const get_feed = function(params) {
-      if(db[params.feed])
-        return db[params.feed];
-      return GET(params) 
-        .then((resp) => (db[params.feed] = new Feed(resp.fullname,resp.feed)))
-        .catch((err) => ( console.error(err) )); //TODO: consider redirecting to error page
+      if(!db || !db[params.feed])
+        return GET(params) 
+          .then((resp) => (db[params.feed] = new Feed(resp.fullname,resp.feed)))
+          .catch((err) => ( console.error(err) )); //TODO: consider redirecting to error page
+      return db[params.feed];
     };
 
     /**
@@ -68,16 +70,32 @@ angular.module('swigit.data_mdl', [])
      *                                    return promise             ]
      */
     const get_post = function(params) {
-      if(db[params.feed].hash[params.url_slug])
-        return db[params.feed].hash[params.url_slug];
-      return GET(params)
-        .then((resp) => (db[params.feed] = new Feed(resp.data)))
+      let post = $q.defer();
+      if(!db || !db[params.feed || params.username].data.hash[params.url_slug])
+        GET(params)
+          .then((resp) => {
+            db.data.hash[params.feed] = resp.data;
+            post.resolve(resp.data);
+          })
+          .catch((err) => ( post.reject(err) )); //TODO: consider redirecting to error page
+      else post.resolve(db[params.feed || params.username].data.hash[params.url_slug])
+      return post.promise;
+    };
+
+    const upd_post = function(params) {
+      params.username = auth_fac.sess.username();
+      if(!params)
+        throw error('Invalid Post Data!');
+      return POST(params)
+        .then((resp) => (console.log(resp)))
         .catch((err) => ( console.error(err) )); //TODO: consider redirecting to error page
     };
 
     return {
+      db: db,
       get_feed: get_feed,
-      get_post: get_post
+      get_post: get_post,
+      upd_post: upd_post
     };
 
   }]);

@@ -1,0 +1,57 @@
+
+<nav> 
+      <div class="nav-wrapper brown lighten-4">
+        
+          <ul class="left">
+            <li>
+              <a tooltipped class="btn-floating btn-large waves-effect waves-light brown lighten-2"
+                data-position="bottom" data-delay="90" data-tooltip="feed"
+                ui-sref="admn.feed">
+                <i class="material-icons brown-text text-darken-3">library_books</i>
+              </a>
+            </li>
+            <li>
+              <a tooltipped class="btn-floating btn-large waves-effect waves-light brown lighten-2"
+                data-position="bottom" data-delay="90" data-tooltip="new-post"
+                ui-sref="admn.edit({url_slug:'new'})">
+                <i class="material-icons brown-text text-darken-3">library_add</i>
+              </a>
+            </li>
+          </ul>
+          <ul class="right">
+            <li>
+            <!-- Dropdown Trigger -->
+              <a dropdown class="dropdown-button btn amber lighten-5 amber-text text-accent-4" 
+                href="javascript:void(0);" data-activates="dash-dropdown" data-hover="true">
+                  ACCOUNT
+              </a>
+
+              <!-- Dropdown Structure -->
+              <ul id="dash-dropdown" class="dropdown-content amber lighten-5">
+                  
+                <li><a class="lighten-5 brown-text" 
+                  ui-sref="admn.prof">profile</a></li>
+                <li><a class="lighten-5 brown-text" 
+                  ui-sref="admn.work">portfolio</a></li>
+
+                <li class="divider"></li>
+
+                <li><a class="lighten-5 brown-text" 
+                  ng-click="logout()">log-out</a></li>
+
+              </ul>
+              <!-- <a class="dropdown-button btn waves-effect waves-dark amber lighten-5 text-amber text-accent-3"
+                data-activates="dash_options">
+                DASHBOARD
+              </a>
+              <ul id='dash_options' class='dropdown-content'>
+                <li><a ui-sref="main">edit-profile</a></li>
+                <li><a ui-sref="main">edit-portfolio</a></li>
+                <li class="divider"></li>
+                <li><a ui-sref="main">log-out</a></li>
+              </ul> -->
+            </li>
+          </ul>
+    
+      </div>
+    </nav>

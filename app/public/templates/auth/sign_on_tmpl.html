@@ -1,25 +1,33 @@
-<div class="container"  ng-controller="main_ctrl">
+<div class="container">
 
 <div class="valign-wrapper" style="min-height: 100vh;">
-<form name="sign_on" class="sign-in-form valign container" novalidate>
+
+<form name="sign_on" class="sign-in-form valign container" 
+  ng-submit="signon(params)" novalidate>
 
   <div class="col s12 m6 offset-m6">
     <input-field>
-      <input type="text" ng-model="signin.username" 
-        class="brown-text text-darken-2" required autofocus/>
+      <input type="text" ng-model="params.username" 
+        class="brown-text text-darken-2" value="{{params.username}}"
+        required autofocus/>
       <label class="brown-text">Username...</label>
     </input-field>
   </div>
 
   <div class="col s12 m6 offset-m6">
     <input-field>
-      <input type="password" ng-model="signin.password" 
-        class="brown-text text-darken-2" required/>
+      <input type="password" ng-model="params.password" 
+        class="brown-text text-darken-2" value="{{params.username}}" required/>
       <label class="brown-text">Password...</label>
     </input-field>
   </div>
 
+  <input type="submit" style="display: none;"/>
+
+  
+
 </form>
+
 </div>
 
 </div>
